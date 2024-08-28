@@ -1,0 +1,35 @@
+const carrossel = document.querySelector('.carrossel');
+let isDragging = false;
+let startX, startY;
+let currentX, currentY;
+let rotateX = 0, rotateY = 0;
+
+carrossel.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  carrossel.style.cursor = 'grabbing';
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+
+  currentX = e.clientX;
+  currentY = e.clientY;
+
+  const deltaX = currentX - startX;
+  const deltaY = currentY - startY;
+
+  rotateY -= deltaX * 0.5; // Ajuste a sensibilidade conforme necessário
+  rotateX += deltaY * 0.5; // Ajuste a sensibilidade conforme necessário
+
+  carrossel.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  startX = currentX;
+  startY = currentY;
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  carrossel.style.cursor = 'grab';
+});
